@@ -6,8 +6,10 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -29,7 +31,6 @@ public class Main {
         //close the tab
 
 
-        Thread.sleep(2000);
 
 
 //Testing Endless disk
@@ -57,7 +58,7 @@ public class Main {
         Thread.sleep(1250);
 
 
-        Disk_Status.close();;
+        Disk_Status.close();
 
 
     }
@@ -121,5 +122,32 @@ public class Main {
 
     void Unit_5(){
 
+    }
+}
+
+
+
+class Unit_3 {
+    WebDriver driver = new FirefoxDriver();
+
+    @BeforeClass
+    void login() throws InterruptedException {
+        //Ensure window is logged in when starting a new driver
+        driver.manage().window().maximize();
+        driver.get("http://localhost:3000");
+        Thread.sleep(500);
+        driver.findElement(By.id("username")).sendKeys("IntrixTheName");
+        driver.findElement(By.id("password")).sendKeys("HelloWorld");
+        Thread.sleep(500);
+        driver.findElement(By.id("login")).click();
+    }
+
+
+    @Test(priority = 2)
+    void addNewStation() {
+        //Getting any page assumes session login first
+        driver.get("http://localhost:3000/radio");
+        driver.findElement(By.id("add")).click();
+        driver.findElement(By.id("title")).sendKeys("Sample Radio");
     }
 }
