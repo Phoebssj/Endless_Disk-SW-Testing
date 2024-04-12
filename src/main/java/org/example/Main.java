@@ -63,6 +63,15 @@ public class Main {
 
     }
 
+    public class unit1 {
+        public static WebDriver press_disc_play(WebDriver driver, String url, String play_id) {
+            driver.get(url);
+            wait(2000);
+            WebElement play_button = driver.findElement(By.id(play_id));
+            play_button.click();
+            wait(2000);
+            return driver;
+        }
 
     void Unit_2() throws InterruptedException {
         //Testing all the buttons and scrolling if viable
