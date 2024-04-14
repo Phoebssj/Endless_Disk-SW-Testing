@@ -23,7 +23,7 @@ public class Main {
 
      //Test if the Browser opens by getting the specific link to test if the browser opens.
         // In this specfic case we'll do firefox
-     Disk_Status.get("");
+     Disk_Status.get("http://localhost:3000");
     // Provide a small delay to test the browser opening
      Thread.sleep(1250);
      // Make it do something here
@@ -157,6 +157,17 @@ class Unit_3 {
         //Getting any page assumes session login first
         driver.get("http://localhost:3000/radio");
         driver.findElement(By.id("add")).click();
-        driver.findElement(By.id("title")).sendKeys("Sample Radio");
+        driver.findElement(By.id("title")).sendKeys("Radio 538 Ibiza");
+        driver.findElement(By.id("artist")).sendKeys("Radio 538");
+        driver.findElement(By.id("source")).sendKeys("https://20873.live.streamtheworld.com/TLPSTR19.mp3")
+        driver.findElement(By.id("submit")).click()
+        Thread.sleep(1000)
+        driver.navigate().refresh();
+        Assert.assertEqual(,)
+    }
+
+    @Test(priority = 2)
+    void removeStation() {
+        
     }
 }
