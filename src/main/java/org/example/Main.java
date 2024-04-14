@@ -10,6 +10,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+import org.testng.Assert;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -137,6 +138,12 @@ public class Main {
 
 
 class Unit_3 {
+    //Notes about Unit 3:
+    // - Priority assigned to force cases to occur in an order. Radio edited before deleted to ensure proper test flow
+    // - Try/Catch blocks are intended to catch errors for cases that are not yet implemented
+    //   - Not all features are implemented, so not all can be found
+    //   - Rather than blow up the test suite with an error, provide an assert that fails the test case
+
     WebDriver driver = new FirefoxDriver();
 
     @BeforeClass
@@ -152,22 +159,188 @@ class Unit_3 {
     }
 
 
-    @Test(priority = 2)
-    void addNewStation() {
-        //Getting any page assumes session login first
-        driver.get("http://localhost:3000/radio");
-        driver.findElement(By.id("add")).click();
-        driver.findElement(By.id("title")).sendKeys("Radio 538 Ibiza");
-        driver.findElement(By.id("artist")).sendKeys("Radio 538");
-        driver.findElement(By.id("source")).sendKeys("https://20873.live.streamtheworld.com/TLPSTR19.mp3")
-        driver.findElement(By.id("submit")).click()
-        Thread.sleep(1000)
-        driver.navigate().refresh();
-        Assert.assertEqual(,)
+    @Test(priority = 1)
+    void addNewStation() { //Req 3.1
+        try {
+            //Getting any page assumes session login first
+            driver.get("http://localhost:3000/radio"); //Nav to radio page
+            driver.findElement(By.id("add")).click(); //Add station...
+            driver.findElement(By.id("title")).sendKeys("Radio 538 Ibiza"); //Enter information in the boxes
+            driver.findElement(By.id("artist")).sendKeys("Radio 538");
+            driver.findElement(By.id("source")).sendKeys("https://20873.live.streamtheworld.com/TLPSTR19.mp3");
+            driver.findElement(By.id("submit")).click(); //And submit the form
+            Thread.sleep(1000);
+            driver.navigate().refresh(); //Refresh page
+            Assert.assertTrue(driver.findElements(By.link_text("Radio 538 Ibiza")) != []); //And confirm the new station is present
+        } catch {
+            Assert.assertTrue(false); //If error, assert false for report purpose
+        }
     }
 
     @Test(priority = 2)
-    void removeStation() {
-        
+    void playRadio() {
+        //Note: This combines 3.4 & 3.5 in a single case
+        try {
+            driver.get("http://localhost:3000/radio");
+            driver.findElement(By.className("audio-control")).click(); //Find play button & click
+            Thread.sleep(3000); //Await to ensure audio plays
+            driver.findElement(By.className("audio-control")).click(); //And pause again
+            Assert.assertTrue(true);
+        } catch {
+            Assert.assertTrue(false);
+        }
+    }
+
+    @Test(priority = 3)
+    void editRadioData() { //Req 3.3
+        try {
+            driver.get("http://localhost:3000/radio");
+            driver.findElement(By.id("radio-player")).click();
+            driver.findElement(By.id("title")).sendKeys("Radio 538 - Ibiza");
+            driver.findElement(By.id("submit")).click();
+            Assert.assertEqual(driver.findElement(By.id("title")).getText(), "Radio 538 - Ibiza");
+        } catch {
+            Assert.assertTrue(false);
+        }
+    }
+
+    @Test(priority = 4)
+    void removeStation() { //Req 3.2
+        try {
+            driver.get("http://localhost:3000/radio");
+            driver.findElement(By.id("remove")).click(); //Click on the first radio
+            String confirm_box = driver.switchTo().alert().getText(); //Confirm the popup 
+            Assert.assertEqual(confirm_box, "Delete radio, are you sure?");
+            driver.switchTo().alert().click();
+            Assert.assertFalse(driver.findElements(By.id("remove"))) //Assert empty array as falsy
+        } catch {
+            Assert.assertTrue(false);
+        }
+    }
+
+    //Case 3.6 in the future - Add 10 stations to see if all are accounted for on the site
+}
+
+
+
+class Unit_6 {
+    //Notes about Unit 6:
+    // - As of writing, this unit has not been implemented in the features of Endless Disc
+    // - Basically, assume this unit is going to blow up
+
+    WebDriver driver = new FirefoxDriver();
+
+    @BeforeClass
+    void login() throws InterruptedException {
+        //Ensure window is logged in when starting a new driver
+        driver.manage().window().maximize();
+        driver.get("http://localhost:3000");
+        Thread.sleep(500);
+        driver.findElement(By.id("username")).sendKeys("IntrixTheName");
+        driver.findElement(By.id("password")).sendKeys("HelloWorld");
+        Thread.sleep(500);
+        driver.findElement(By.id("login")).click();
+    }
+
+    @Test(priority = 1)
+    void showsMusic() { //Req 6.1
+        try {
+            driver.get("http://localhost:3000/library");
+            driver.findElement(By.literalText("Sample Album")).click(); //Click on Sample Album to grab songs
+            Assert.assertTrue(driver.findElements(By.className("audio-player")).length() == 3) // Assert 3 songs found
+        } catch {
+            Assert.assertTrue(false);
+        }
+    }
+
+    @Test(priority = 2)
+    void startSong() { //Req 6.3 w/ sprinkles (and requires manual observation for verification)
+        try {
+            driver.get("http://localhost:3000/library");
+            driver.findElement(By.id("play-pause")).click(); //Click play
+            Thread.sleep(3000); //Give time to evaluate
+            driver.findElement(By.id("ffwd")).click(); //Click the seek forward button (skips timestamp +15s)
+            Thread.sleep(3000);
+            driver.findElement(By.id("rwnd")).click(); //Click reqind (seek -15s)
+            Thread.sleep(3000);
+            Assert.assertTrue(true);
+        } catch {
+            Assert.assertTrue(false);
+        }
+    }
+
+    @Test(priority = 3) 
+    void volumeSlider() { //Req 6.4 & 6.5
+        try {
+            driver.get("http://localhost:3000/library");
+            driver.findElement(By.id("play-pause")).click(); //Play song
+            Thread.sleep(3000);
+            for(int i = 1; i < 20; i++) {
+                driver.findElement(By.id("volume")).sendKeys(Keys.ARROW_RIGHT) //Increase volume
+            }
+            Thread.sleep(3000);
+            Assert.assertTrue(true);
+        } catch {
+            Assert.assertTrue(false);
+        }
+    }
+}
+
+
+
+class Unit_7 {
+    //Notes about Unit 7:
+    // - As with unit 6, this is not fully implemented AToW, so this unit will likely blow up
+    
+    WebDriver driver = new FirefoxDriver();
+
+    @BeforeClass
+    void login() throws InterruptedException {
+        //Ensure window is logged in when starting a new driver
+        driver.manage().window().maximize();
+        driver.get("http://localhost:3000");
+        Thread.sleep(500);
+        driver.findElement(By.id("username")).sendKeys("IntrixTheName");
+        driver.findElement(By.id("password")).sendKeys("HelloWorld");
+        Thread.sleep(500);
+        driver.findElement(By.id("login")).click();
+    }
+
+    @Test(priority = 1)
+    void defaultSort() { //Req 7.1
+        try {
+            driver.get("http://localhost:3000/library");
+            Select sortBox = new Select(driver.findElement(By.id("sort")));
+            List<WebElement> selectedOptionList = sortBox.getAllSelectedOptions();
+            Assert.assertEqual(selectedOptionList, ["Title, Ascending"]);
+        } catch {
+            Assert.assertTrue(false);
+        }
+    }
+
+    @Test(priority = 2)
+    void adjustSortingTitle() {
+        try {
+            driver.get("http://localhost:3000/library");
+            Select sortBox = new Select(driver.findElement(By.id("sort")));
+            sortBox.selectByVisibleText("Title, Descending"); //Adjust the option selected
+            List<WebElement> selectedOptionList = sortBox.getAllSelectedOptions();
+            Assert.assertEqual(selectedOptionList, ["Title, Descending"]); //Assert option is the only one selected
+        } catch {
+            Assert.assertTrue(false);
+        }
+    }
+
+    @Test(priority = 2)
+    void adjustSortingArtist() {
+        try {
+            driver.get("http://localhost:3000/library");
+            Select sortBox = new Select(driver.findElement(By.id("sort")));
+            sortBox.selectByVisibleText("Artist, Ascending"); //Adjust the option selected
+            List<WebElement> selectedOptionList = sortBox.getAllSelectedOptions();
+            Assert.assertEqual(selectedOptionList, ["Artist, Ascending"]); //Assert option is the only one selected
+        } catch {
+            Assert.assertTrue(false);
+        }
     }
 }
