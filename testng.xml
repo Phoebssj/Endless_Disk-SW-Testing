@@ -20,6 +20,23 @@
                 <class name="org.example.Unit_3">
                     <methods>
                         <include name="addNewStation"/>
+                        <include name="playRadio"/>
+                        <include name="editRadioData"/>
+                        <include name="removeStation"/>
+                    </methods>
+                </class>
+                <class name="org.example.Unit_6">
+                    <methods>
+                        <include name="showsMusic"/>
+                        <include name="startSong"/>
+                        <include name="volumeSlider"/>
+                    </methods>
+                </class>
+                <class name="org.example.Unit_7">
+                    <methods>
+                        <include name="defaultSort"/>
+                        <include name="adjustSortingTitle"/>
+                        <include name="adjustSortingArtist"/>
                     </methods>
                 </class>
             </classes>
