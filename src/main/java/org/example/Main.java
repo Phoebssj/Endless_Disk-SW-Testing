@@ -11,28 +11,29 @@ import org.testng.annotations.BeforeTest;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class Main {
+class Unit_0 {
     private WebDriver Disk_Status;// intialize the webdriver load page.
+
     @BeforeTest
+    void Open_Driver() throws InterruptedException {
+        //check if the browser Window can load (depending on where it should run)
+        WebDriver Disk_Status = new FirefoxDriver();
 
-    void Unit_0() throws InterruptedException {
-    //check if the browser Window can load (depending on where it should run)
-     WebDriver Disk_Status = new FirefoxDriver();
-
-     //Test if the Browser opens by getting the specific link to test if the browser opens.
+        //Test if the Browser opens by getting the specific link to test if the browser opens.
         // In this specfic case we'll do firefox
-     Disk_Status.get("");
-    // Provide a small delay to test the browser opening
-     Thread.sleep(1250);
-     // Make it do something here
+        Disk_Status.get("");
+        // Provide a small delay to test the browser opening
+        Thread.sleep(1250);
+        // Make it do something here
         // depending on th site I'll most likely scroll
         //close the tab
 
 
         Thread.sleep(2000);
+    }
 
-
-//Testing Endless disk
+    void Open_EndlessDisk() throws InterruptedException {
+        //Testing Endless disk
         Disk_Status = new FirefoxDriver();
         //Open the tab again
         Disk_Status.get("");
@@ -40,12 +41,13 @@ public class Main {
         //If it doesn't it does not open and the test fails.
         Thread.sleep(1250);
         // I know how java works and it won't let you close it.... less you throw an error by stating to close again
+    }
 
-
-// Testing getting data from the database.
+    void GetPageSource() throws InterruptedException {
+        // Testing getting data from the database.
         Disk_Status = new FirefoxDriver();
         //Open the tab again
-//I'm unsure to how the data is defined within the database so I'm aiming for the site
+        //I'm unsure to how the data is defined within the database so I'm aiming for the site
         Thread.sleep(1250);
 
         String pageSource = Disk_Status.getPageSource(); //Initalize the variable of getting a page source.
@@ -57,27 +59,36 @@ public class Main {
         Thread.sleep(1250);
 
 
-        Disk_Status.close();;
+        Disk_Status.close();
+        ;
 
 
     }
 
-
-    void Unit_2() throws InterruptedException {
+}
+class Unit_2 {
+    private WebDriver Disk_Status = new FirefoxDriver();
         //Testing all the buttons and scrolling if viable
         // First open a new driver and get the site
-
+    void Nav_bar() throws InterruptedException {
         WebDriver Disk_Status = new FirefoxDriver();
+
+        //I'll have to define the window handles and look at the two tabs
+        //Meaning I need to make a loop.... I'm Lazy....
 
         Disk_Status.get("");
         // Provide a small delay to test the browser opening
+        // Login into the site....
+        //Disk_Status.findElement(By.id("")).sendKeys("");
+        //Disk_Status.findElement(By.id("")).sendKeys("");
+
         Thread.sleep(1250);
-// Find the button to select
+
+        // Find the button to select
         WebElement Nav_pg_1 = Disk_Status.findElement(By.id(""));
-    //Click it
+        //Click it
         Nav_pg_1.click();
         Thread.sleep(2250);
-
 
         // Find the button to select
         WebElement Nav_pg_2 = Disk_Status.findElement(By.id(""));
@@ -101,25 +112,69 @@ public class Main {
         //Click it
         Nav_pg_5.click();
         // Testing the access of the github repo and issue release
+    }
 
+
+
+
+    void Open_Github() throws InterruptedException {
+        WebDriver Disk_Status = new FirefoxDriver();
+
+        Disk_Status.get("");
+        // Provide a small delay to test the browser opening
+        Thread.sleep(1250);
+        //WebElement Nav_pg_# = Disk_Status.findElement(By.id(""));
         //Navigate to  the github
         //Nav_pg_#.click();
         Thread.sleep(1250);
         //Once loaded scroll on the page
-        //
-        JavascriptExecutor Scrolldown_gh = (JavascriptExecutor) Disk_Status;
-
+        JavascriptExecutor Scroll_gh = (JavascriptExecutor) Disk_Status;
+        Thread.sleep(1250);
+        //scroll down
+        Scroll_gh.executeScript("window.scrollTo(0,document.body.scrollHeight)");
+        Thread.sleep(1250);
+        //scroll up
+        Scroll_gh.executeScript("window.scrollTo(0,0)");
+        Thread.sleep(1250);
 
         //close tab
+        //Need to ask Bradley on that
+        // for now Disk_Status.close()
+        // Disk_Status.switchTo().window(EndlessDisk_tab);
+        Disk_Status.close();
+
+
+
 
 
         //Open the info release
+
+
+
+        // close window
+    }
+
+    void Open_InfoPg() throws InterruptedException {
+        WebDriver Disk_Status = new FirefoxDriver();
+
+        //Disk_Status.findElement(By.id("")).sendKeys("");
+        //Disk_Status.findElement(By.id("")).sendKeys("");
+
+        Disk_Status.get("");
+        // Provide a small delay to test the browser opening
+        Thread.sleep(1250);
+        //Open the info release
+        //WebElement Nav_pg_# = Disk_Status.findElement(By.id(""));
+        //Navigate to the infopg
+        //Nav_pg_#.click();
 
         // close window
 
     }
 
-    void Unit_5(){
+
+    class Unit_5{
+
 
     }
 }
