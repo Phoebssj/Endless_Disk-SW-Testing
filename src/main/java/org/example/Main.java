@@ -6,6 +6,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.Assert;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 
@@ -157,6 +158,8 @@ class Unit_2 {
     void Open_InfoPg() throws InterruptedException {
         WebDriver Disk_Status = new FirefoxDriver();
 
+
+//Login in
         //Disk_Status.findElement(By.id("")).sendKeys("");
         //Disk_Status.findElement(By.id("")).sendKeys("");
 
@@ -174,6 +177,91 @@ class Unit_2 {
 
 
     class Unit_5{
+        private WebDriver driver = new FirefoxDriver();
+        void FetchingData_MongoDb() throws InterruptedException {
+            //I'm leaving two version as Mongo db has it's fighitng niche here....
+            //Define a new driver
+            WebDriver driver = new FirefoxDriver();
+            //get the admin for the mongodb
+            driver.get("");
+            Thread.sleep(1250);
+            // Find an account in the database
+            WebElement queryAccount = driver.findElement(By.id(""));
+//store the string from the account
+            String accountInfo = queryAccount.getText();
+//print the account info
+            System.out.println(accountInfo);
+            Thread.sleep(1250);
+            driver.close();
+
+        }
+
+        void emptyEntry() throws InterruptedException {
+
+            //Define a new driver
+            WebDriver driver = new FirefoxDriver();
+            //get the admin for the mongodb
+            driver.get("");
+            // get account/ track entry
+            WebElement Entry = driver.findElement(By.id(""));
+            Thread.sleep(1250);
+            // get the attributes of the entry
+            String EntryContent = Entry.getAttribute("value");
+            //check if it's empty
+            if(EntryContent.isEmpty()){// ifi empty print entry and it's output result
+                Thread.sleep(1250);
+                System.out.println(EntryContent);
+                Thread.sleep(1250);
+                //Also print it's empty
+                System.out.println("Content is Empty");
+            }
+            else{
+                System.out.println("Content is not Empty");
+                Thread.sleep(1250);
+                System.out.println(EntryContent);
+            }
+            Thread.sleep(1250);
+            driver.close();
+
+
+
+        }
+
+        void MismatchEntry_Error() throws InterruptedException {
+            //Define a new driver
+            WebDriver driver = new FirefoxDriver();
+            //get the admin for the mongodb
+
+            driver.get("");
+            // get account/ track entry
+            Thread.sleep(1250);
+            WebElement Entry_1 = driver.findElement(By.id(""));
+            Thread.sleep(1250);
+            //get the content of it
+            String Content_1 = Entry_1.getTagName();
+            Thread.sleep(1250);
+            //Entry content needed
+            Thread.sleep(1250);
+            WebElement Entry_2 = driver.findElement(By.id(""));
+            String Content_2 = Entry_2.getTagName();
+            Thread.sleep(1250);
+
+            //Check if the data does not have the correct entry within the account
+            Assert.assertNotEquals(Content_1,Content_2,"Mismatch entries");
+            Thread.sleep(1250);
+
+            driver.close();
+            }
+
+
+            void NewEntry(){
+
+
+            }
+
+        }
+
+
 
 
     }
