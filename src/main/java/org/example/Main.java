@@ -259,10 +259,34 @@ class Unit_5{
     }
 
 
-    void NewEntry(){
+    void NewEntry() throws InterruptedException {
+        //Define a new driver
+        WebDriver driver = new FirefoxDriver();
+        //get the admin for the mongodb
+
+        driver.get("");
+        // get ther content of the new song/ radio
+        Thread.sleep(1250);
+        WebElement Song_Entry = driver.findElement(By.id(""));
+
+        // Get the content of the current song/ radio
+        Thread.sleep(1250);
+        WebElement Current_Entry = driver.findElement(By.id(""));
+
+            Thread.sleep(1250);
+        // Check if the data is new entry by comparing it to the current.
+        Assert.assertNotSame(Song_Entry,Current_Entry, "New Entry Detected");
+        Thread.sleep(1250);
+
+        driver.close();
+
+
+
 
 
     }
+
+
 
 }
 
