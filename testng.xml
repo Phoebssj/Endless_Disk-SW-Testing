@@ -1,44 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-    <suite name="All Test Suite">
-        <test verbose="2" preserve-order="true" name="C:/Users/brad1/IdeaProjects/Endless_Disk-SW-Testing/src/main/java/org/example/Main.java">
-            <classes>
-                <class name="org.example.Main">
-                    <methods>
-                        <include name="addNewStation"/>
-                        <include name="playRadio"/>
-                        <include name="editRadioData"/>
-                        <include name="removeStation"/>
-                        <include name="showsMusic"/>
-                        <include name="startSong"/>
-                        <include name="volumeSlider"/>
-                        <include name="defaultSort"/>
-                        <include name="adjustSortingTitle"/>
-                        <include name="adjustSortingArtist"/>
-                    </methods>
-                </class>
-                <class name="org.example.Unit_3">
-                    <methods>
-                        <include name="addNewStation"/>
-                        <include name="playRadio"/>
-                        <include name="editRadioData"/>
-                        <include name="removeStation"/>
-                    </methods>
-                </class>
-                <class name="org.example.Unit_6">
-                    <methods>
-                        <include name="showsMusic"/>
-                        <include name="startSong"/>
-                        <include name="volumeSlider"/>
-                    </methods>
-                </class>
-                <class name="org.example.Unit_7">
-                    <methods>
-                        <include name="defaultSort"/>
-                        <include name="adjustSortingTitle"/>
-                        <include name="adjustSortingArtist"/>
-                    </methods>
-                </class>
-            </classes>
-        </test>
+<suite name="All Test Suite">
+    <test verbose="2" preserve-order="true" name="C:/Users/brad1/IdeaProjects/Endless_Disk-SW-Testing/src/main/java/org/example/Main.java">
+        <classes>
+            <class name="org.example.Main">
+                <methods>
+                    <include name="forward_check"/>
+                    <include name="navButtons"/>
+                    <include name="addNewStation"/>
+                    <include name="playRadio"/>
+                    <include name="editRadioData"/>
+                    <include name="removeStation"/>
+                    <include name="showsMusic"/>
+                    <include name="startSong"/>
+                    <include name="volumeSlider"/>
+                    <include name="defaultSort"/>
+                    <include name="adjustSortingTitle"/>
+                    <include name="adjustSortingArtist"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
 </suite>

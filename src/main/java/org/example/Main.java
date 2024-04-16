@@ -37,40 +37,40 @@ public class Main {
         // In this specfic case we'll do firefox
         driver.get("https://www.google.com");
         // Provide a small delay to test the browser opening
-        wait(1250);
+        Thread.sleep(1250);
         // Make it do something here
         // depending on th site I'll most likely scroll
         //close the tab
-        driver.close();
+        //driver.close();
 
 
 //Testing Endless disk
-        driver = new FirefoxDriver();
+        //driver = new FirefoxDriver();
         //Open the tab again
         driver.get("http://localhost:3000");
         //check the connection of the site works if it does work it doesn't throw a fail for the site
         //If it doesn't it does not open and the test fails.
-        wait(1250);
+        Thread.sleep(1250);
         // I know how java works and it won't let you close it.... less you throw an error by stating to close again
-        driver.close();
+        //driver.close();
 
 
 // Testing getting data from the database.
-        driver = new FirefoxDriver();
+        //driver = new FirefoxDriver();
         //Open the tab again
 //I'm unsure to how the data is defined within the database so I'm aiming for the site
-        wait(1250);
+        Thread.sleep(1250);
 
         String pageSource = driver.getPageSource(); //Initalize the variable of getting a page source.
         // but if the page source contains a specific item,
         pageSource.contentEquals("");//print the source data and return true
         //print the source out here
-        wait(1250);
+        Thread.sleep(1250);
         System.out.println(pageSource);
-        wait(1250);
+        Thread.sleep(1250);
 
 
-        driver.close();
+        //driver.close();
 
 
     }
@@ -79,10 +79,10 @@ public class Main {
         // Press either the play or pause button, depending on id passed in
         public WebDriver press_play_pause(WebDriver driver, String url, String btn_id) throws InterruptedException {
             driver.get(url);
-            wait(2000);
+            Thread.sleep(2000);
             WebElement target_btn = driver.findElement(By.id(btn_id));
             target_btn.click();
-            wait(2000);
+            Thread.sleep(2000);
             return driver;
         }
         public double get_current_time(WebDriver driver, WebElement playback_elem) {
@@ -132,10 +132,10 @@ public class Main {
             return driver;
         }
     }
-        void Unit_2() throws InterruptedException {
-    }
 
-    class Unit_2() {
+
+
+    class Unit_2 {
 
         @Test(priority = 1)
         void navButtons() throws InterruptedException {
@@ -143,65 +143,54 @@ public class Main {
             // First open a new driver and get the site
             driver.get("http://localhost:3000");
             // Provide a small delay to test the browser opening
-            wait(1250);
+            Thread.sleep(1250);
             // Find the button to select
-            WebElement Nav_pg_1 = driver.findElement(By.id(""));
-            //Click it
+            WebElement Nav_pg_1 = driver.findElement(By.id("library"));
             Nav_pg_1.click();
-            wait(2250);
-        }
-
-
-
-
-
-
-
-
-        // Find the button to select
-        WebElement Nav_pg_2 = driver.findElement(By.id(""));
-        //Click it
-        Nav_pg_2.click();
-        wait(2250);
+            Thread.sleep(2250);
+            // Find the button to select
+            WebElement Nav_pg_2 = driver.findElement(By.id("radio"));
+            //Click it
+            Nav_pg_2.click();
+            Thread.sleep(2250);
 
             // Find the button to select
-            WebElement Nav_pg_3 = driver.findElement(By.id(""));
+            WebElement Nav_pg_3 = driver.findElement(By.id("import"));
             //Click it
             Nav_pg_3.click();
-            wait(2250);
+            Thread.sleep(2250);
 
             // Find the button to select
-            WebElement Nav_pg_4 = driver.findElement(By.id(""));
+            WebElement Nav_pg_4 = driver.findElement(By.id("export"));
             //Click it
             Nav_pg_4.click();
 
             // Find the button to select
-            WebElement Nav_pg_5 = driver.findElement(By.id(""));
+            WebElement Nav_pg_5 = driver.findElement(By.id("notices"));
             //Click it
             Nav_pg_5.click();
+            Thread.sleep(1250);
             // Testing the access of the github repo and issue release
+            WebElement Nav_pg_6 = driver.findElement(By.xpath("/html/body/div/nav/ul/a"));
+            Nav_pg_6.click();
+            Thread.sleep(1250);
 
             //Navigate to  the github
             //Nav_pg_#.click();
-            wait(1250);
+            Thread.sleep(1250);
+        }
+
             //Once loaded scroll on the page
             //
             JavascriptExecutor Scrolldown_gh = (JavascriptExecutor) driver;
-
-
             //close tab
-
-
             //Open the info release
-
             // close window
-
         }
 
         void Unit_5() {
 
         }
-
 
 
     class Unit_3 {
@@ -215,9 +204,9 @@ public class Main {
             driver.findElement(By.id("artist")).sendKeys("Radio 538");
             driver.findElement(By.id("source")).sendKeys("https://20873.live.streamtheworld.com/TLPSTR19.mp3");
             driver.findElement(By.id("submit")).click(); //And submit the form
-            wait(1000);
+            Thread.sleep(1000);
             driver.navigate().refresh(); //Refresh page
-            wait(1000);
+            Thread.sleep(1000);
             Assert.assertFalse(driver.findElements(By.className("station")).isEmpty()); //And confirm the new station is present
         }
 
@@ -226,7 +215,7 @@ public class Main {
             //Note: This combines 3.4 & 3.5 in a single case
             driver.get("http://localhost:3000/radio");
             driver.findElement(By.className("audio-control")).click(); //Find play button & click
-            wait(3000); //Await to ensure audio plays
+            Thread.sleep(3000); //Await to ensure audio plays
             driver.findElement(By.className("audio-control")).click(); //And pause again
             Assert.assertTrue(true);
 
@@ -273,11 +262,11 @@ public class Main {
         void startSong() throws InterruptedException { //Req 6.3 w/ sprinkles (and requires manual observation for verification)
             driver.get("http://localhost:3000/library");
             driver.findElement(By.id("play-pause")).click(); //Click play
-            wait(3000); //Give time to evaluate
+            Thread.sleep(3000); //Give time to evaluate
             driver.findElement(By.id("ffwd")).click(); //Click the seek forward button (skips timestamp +15s)
-            wait(3000);
+            Thread.sleep(3000);
             driver.findElement(By.id("rwnd")).click(); //Click reqind (seek -15s)
-            wait(3000);
+            Thread.sleep(3000);
             Assert.assertTrue(true);
         }
 
@@ -285,11 +274,11 @@ public class Main {
         void volumeSlider() throws InterruptedException { //Req 6.4 & 6.5
             driver.get("http://localhost:3000/library");
             driver.findElement(By.id("play-pause")).click(); //Play song
-            wait(3000);
+            Thread.sleep(3000);
             for(int i = 1; i < 20; i++) {
                 driver.findElement(By.id("volume")).sendKeys(Keys.ARROW_RIGHT); //Increase volume
             }
-            wait(3000);
+            Thread.sleep(3000);
             Assert.assertTrue(true);
         }
     }
@@ -325,6 +314,5 @@ public class Main {
             List<WebElement> selectedOptionList = sortBox.getAllSelectedOptions();
             Assert.assertEquals(selectedOptionList.get(0).getText(), "Artist, Ascending"); //Assert option is the only one selected
         }
-    }
     }
 }
