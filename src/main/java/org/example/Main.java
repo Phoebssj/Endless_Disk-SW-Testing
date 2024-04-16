@@ -14,6 +14,13 @@ import java.util.List;
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
+    
+    @BeforeSuite
+    void setup() {
+        WebDriver driver = new FirefoxDriver();
+        driver.manage().window().maximize();
+    }
+    
     private WebDriver Disk_Status;// intialize the webdriver load page.
 
     @BeforeTest
@@ -25,7 +32,7 @@ public class Main {
         // In this specfic case we'll do firefox
         Disk_Status.get("https://www.google.com");
         // Provide a small delay to test the browser opening
-        Thread.sleep(1250);
+        wait(1250);
         // Make it do something here
         // depending on th site I'll most likely scroll
         //close the tab
@@ -38,7 +45,7 @@ public class Main {
         Disk_Status.get("http://localhost:3000");
         //check the connection of the site works if it does work it doesn't throw a fail for the site
         //If it doesn't it does not open and the test fails.
-        Thread.sleep(1250);
+        wait(1250);
         // I know how java works and it won't let you close it.... less you throw an error by stating to close again
         Disk_Status.close();
 
@@ -47,15 +54,15 @@ public class Main {
         Disk_Status = new FirefoxDriver();
         //Open the tab again
 //I'm unsure to how the data is defined within the database so I'm aiming for the site
-        Thread.sleep(1250);
+        wait(1250);
 
         String pageSource = Disk_Status.getPageSource(); //Initalize the variable of getting a page source.
         // but if the page source contains a specific item,
         pageSource.contentEquals("");//print the source data and return true
         //print the source out here
-        Thread.sleep(1250);
+        wait(1250);
         System.out.println(pageSource);
-        Thread.sleep(1250);
+        wait(1250);
 
 
         Disk_Status.close();
@@ -128,25 +135,25 @@ public class Main {
 
             Disk_Status.get("");
             // Provide a small delay to test the browser opening
-            Thread.sleep(1250);
+            wait(1250);
 // Find the button to select
             WebElement Nav_pg_1 = Disk_Status.findElement(By.id(""));
             //Click it
             Nav_pg_1.click();
-            Thread.sleep(2250);
+            wait(2250);
 
 
             // Find the button to select
             WebElement Nav_pg_2 = Disk_Status.findElement(By.id(""));
             //Click it
             Nav_pg_2.click();
-            Thread.sleep(2250);
+            wait(2250);
 
             // Find the button to select
             WebElement Nav_pg_3 = Disk_Status.findElement(By.id(""));
             //Click it
             Nav_pg_3.click();
-            Thread.sleep(2250);
+            wait(2250);
 
             // Find the button to select
             WebElement Nav_pg_4 = Disk_Status.findElement(By.id(""));
@@ -161,7 +168,7 @@ public class Main {
 
             //Navigate to  the github
             //Nav_pg_#.click();
-            Thread.sleep(1250);
+            wait(1250);
             //Once loaded scroll on the page
             //
             JavascriptExecutor Scrolldown_gh = (JavascriptExecutor) Disk_Status;
@@ -198,10 +205,10 @@ class Unit_3 {
         //Ensure window is logged in when starting a new driver
         driver.manage().window().maximize();
         driver.get("http://localhost:3000");
-        Thread.sleep(500);
+        wait(500);
         driver.findElement(By.id("username")).sendKeys("IntrixTheName");
         driver.findElement(By.id("password")).sendKeys("HelloWorld");
-        Thread.sleep(500);
+        wait(500);
         driver.findElement(By.id("login-button")).click();
     }
 
@@ -219,9 +226,9 @@ class Unit_3 {
         driver.findElement(By.id("artist")).sendKeys("Radio 538");
         driver.findElement(By.id("source")).sendKeys("https://20873.live.streamtheworld.com/TLPSTR19.mp3");
         driver.findElement(By.id("submit")).click(); //And submit the form
-        Thread.sleep(1000);
+        wait(1000);
         driver.navigate().refresh(); //Refresh page
-        Thread.sleep(1000);
+        wait(1000);
         Assert.assertFalse(driver.findElements(By.className("station")).isEmpty()); //And confirm the new station is present
     }
 
@@ -230,7 +237,7 @@ class Unit_3 {
         //Note: This combines 3.4 & 3.5 in a single case
         driver.get("http://localhost:3000/radio");
         driver.findElement(By.className("audio-control")).click(); //Find play button & click
-        Thread.sleep(3000); //Await to ensure audio plays
+        wait(3000); //Await to ensure audio plays
         driver.findElement(By.className("audio-control")).click(); //And pause again
         Assert.assertTrue(true);
 
@@ -273,10 +280,10 @@ class Unit_6 {
         //Ensure window is logged in when starting a new driver
         driver.manage().window().maximize();
         driver.get("http://localhost:3000");
-        Thread.sleep(500);
+        wait(500);
         driver.findElement(By.id("username")).sendKeys("IntrixTheName");
         driver.findElement(By.id("password")).sendKeys("HelloWorld");
-        Thread.sleep(500);
+        wait(500);
         driver.findElement(By.id("login-button")).click();
     }
 
@@ -296,11 +303,11 @@ class Unit_6 {
     void startSong() throws InterruptedException { //Req 6.3 w/ sprinkles (and requires manual observation for verification)
         driver.get("http://localhost:3000/library");
         driver.findElement(By.id("play-pause")).click(); //Click play
-        Thread.sleep(3000); //Give time to evaluate
+        wait(3000); //Give time to evaluate
         driver.findElement(By.id("ffwd")).click(); //Click the seek forward button (skips timestamp +15s)
-        Thread.sleep(3000);
+        wait(3000);
         driver.findElement(By.id("rwnd")).click(); //Click reqind (seek -15s)
-        Thread.sleep(3000);
+        wait(3000);
         Assert.assertTrue(true);
     }
 
@@ -308,11 +315,11 @@ class Unit_6 {
     void volumeSlider() throws InterruptedException { //Req 6.4 & 6.5
         driver.get("http://localhost:3000/library");
         driver.findElement(By.id("play-pause")).click(); //Play song
-        Thread.sleep(3000);
+        wait(3000);
         for(int i = 1; i < 20; i++) {
             driver.findElement(By.id("volume")).sendKeys(Keys.ARROW_RIGHT); //Increase volume
         }
-        Thread.sleep(3000);
+        wait(3000);
         Assert.assertTrue(true);
     }
 }
@@ -330,10 +337,10 @@ class Unit_7 {
         //Ensure window is logged in when starting a new driver
         driver.manage().window().maximize();
         driver.get("http://localhost:3000");
-        Thread.sleep(500);
+        wait(500);
         driver.findElement(By.id("username")).sendKeys("IntrixTheName");
         driver.findElement(By.id("password")).sendKeys("HelloWorld");
-        Thread.sleep(500);
+        wait(500);
         driver.findElement(By.id("login-button")).click();
     }
 
