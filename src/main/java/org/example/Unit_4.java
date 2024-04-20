@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 
 import static org.example.Global.driver;
 
-class Unit_4 {
+public class Unit_4 {
     public boolean isItemInLocalStorage(String item) {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         // Returns true as long as specified item is in session storage
