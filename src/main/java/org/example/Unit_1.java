@@ -7,83 +7,89 @@ import org.testng.annotations.Test;
 import static org.example.Global.driver;
 
 public class Unit_1 {
-    // Press either the play or pause button, depending on id passed in
-    @Test
-    public WebDriver press_play_pause(String url, String btn_id) throws InterruptedException {
-        driver.get(url);
-        Thread.sleep(2000);
-        WebElement target_btn = driver.findElement(By.id(btn_id));
+    // Throw exception exists in case Thread.sleep fails
+    public void press_and_wait(WebElement target_btn, int wait_time) throws InterruptedException{
         target_btn.click();
-        Thread.sleep(2000);
-        return driver;
+        Thread.sleep(wait_time);
     }
-    public double get_current_time(WebDriver driver, WebElement playback_elem) {
+
+    public double get_current_time(WebElement playback_elem) {
         String get_curr_time = "return arguments[0].currentTime;";
         JavascriptExecutor js = (JavascriptExecutor) driver;
         double current_time = (Double) js.executeScript(get_curr_time, playback_elem);
         return current_time;
     }
-    public void Invalid_id() {
-        try {
-            throw new InvalidArgumentException("Please provide ID for correct seek button");
-        }
-        catch (InvalidArgumentException e){
-            System.err.println("InvalidArgumentException: "+e.getMessage());
-        }
+
+    public double[] get_time_diff(WebElement playback_bar, String btn_id){
+        double[] time_diff = new double[2];
+        double initial_time = get_current_time(playback_bar);
+        time_diff[0] = initial_time;
+        // Find the seek button and click it
+        WebElement seek_btn = driver.findElement(By.id(btn_id));
+        double final_time = get_current_time(playback_bar);
+        time_diff[1] = final_time;
+        return time_diff;
     }
+
     @Test
-    public void forward_check(String url, String btn_id) {
+    public void test_pause() throws InterruptedException {
+        String url = "http://localhost:3000/library";
+        String pause_id = "Placeholder";
         driver.get(url);
-        String seek_forward = "forward";
-        boolean seek_forward_worked = false;
-        // Ensure we are testing the seek forward button
-        if (btn_id.equals(seek_forward)) {
-            // Find seek bar and check the initial time
-            WebElement playback_bar = driver.findElement(By.tagName("audio"));
-            double initial_time = get_current_time(driver, playback_bar);
-            // Find the seek button and click it
-            WebElement target_btn = driver.findElement(By.id(seek_forward));
-            target_btn.click();
-            // Use time diff to verify btn skips fwd 15 secs
-            double final_time = get_current_time(driver, playback_bar);
-            double lag_time = 0.35;
-            // If endless disc has to load, or code takes more than lag_time to exec
-            // Test will still pass since the button still skips properly
-            if (final_time-initial_time < 15+lag_time || final_time-initial_time > 15-lag_time)
-                seek_forward_worked = true;
-        }
-        // If we are NOT testing the seek forward button, throw error
-        else {
-            Invalid_id();
-        }
-        Assert.assertTrue(seek_forward_worked);
+        Thread.sleep(2000);
+        WebElement pause_btn = driver.findElement(By.id(pause_id));
+        press_and_wait(pause_btn, 2000);
     }
+
     @Test
-    public void rewind_check(WebDriver driver, String url, String btn_id) {
+    public void test_play() throws InterruptedException {
+        String url = "http://localhost:3000/library";
+        String play_id = "Placeholder";
         driver.get(url);
-        String seek_backward = "rewind";
-        boolean seek_backward_worked = false;
-        // Ensure we are testing the seek forward button
-        if (btn_id.equals(seek_backward)) {
-            // Find seek bar and check the initial time
-            WebElement playback_bar = driver.findElement(By.tagName("audio"));
-            double initial_time = get_current_time(driver, playback_bar);
-            // Find the seek button and click it
-            WebElement target_btn = driver.findElement(By.id(seek_backward));
-            target_btn.click();
-            // Use time diff to verify btn skips fwd 15 secs
-            double final_time = get_current_time(driver, playback_bar);
-            double lag_time = 0.35;
-            // If endless disc has to load, or code takes more than lag_time to exec
-            // Test will still pass since the button still skips properly
-            if (initial_time-final_time < 15+lag_time || initial_time-final_time > 15-lag_time)
-                //There may be issues when initial or final time is 0
-                seek_backward_worked = true;
+        Thread.sleep(2000);
+        WebElement pause_btn = driver.findElement(By.id(play_id));
+        press_and_wait(pause_btn, 2000);
+    }
+
+    @Test
+    public void forward_check() {
+        String url = "http://localhost:3000/library";
+        driver.get(url);
+        String forward_id = "Placeholder";
+        boolean forward_worked = false;
+        // Find seek bar and get time change from seek forward
+        WebElement playback_bar = driver.findElement(By.tagName("audio"));
+        double[] time_diff = get_time_diff(playback_bar, forward_id);
+        double initial_time = time_diff[0];
+        double final_time = time_diff[1];
+        // Lag time added to account for loading or slow code execution
+        double lag_time = 0.35;
+        // Final minus init time ensures result is pos
+        double time_skipped = final_time - initial_time;
+        if (time_skipped < 15+lag_time && time_skipped > 15-lag_time) {
+            forward_worked = true;
         }
-        // If we are NOT testing the seek backward button, throw error
-        else {
-            Invalid_id();
+        Assert.assertTrue(forward_worked);
+    }
+
+    @Test
+    public void rewind_check() {
+        String url = "http://localhost:3000/library";
+        driver.get(url);
+        String backward_id = "Placeholder";
+        boolean backward_worked = false;
+        // Find seek bar and get time change from seek back
+        WebElement playback_bar = driver.findElement(By.tagName("audio"));
+        double[] time_diff = get_time_diff(playback_bar, backward_id);
+        double initial_time = time_diff[0];
+        double final_time = time_diff[1];
+        // Lag time added to account for loading or slow code execution
+        double lag_time = 0.35;
+        // Init minus final time ensures result is pos
+        double time_skipped = initial_time - final_time;
+        if (time_skipped < 15+lag_time && time_skipped > 15-lag_time) {
+            backward_worked = true;
         }
-        Assert.assertTrue(seek_backward_worked);
+        Assert.assertTrue(backward_worked);
     }
 }
