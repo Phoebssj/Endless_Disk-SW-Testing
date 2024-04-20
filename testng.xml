@@ -1,19 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="All Test Suite">
-    <test verbose="2" preserve-order="true" name="C:/Users/brad1/IdeaProjects/Endless_Disk-SW-Testing/src/main/java/org/example/Main.java">
+    <test verbose="2" preserve-order="true" name="C:/Users/brad1/IdeaProjects/Endless_Disk-SW-Testing/src/main/java/org/example">
         <classes>
             <class name="org.example.Main">
                 <methods>
+                    <include name="setup"/>
+                    <include name="teardown"/>
+                </methods>
+            </class>
+            <class name="org.example.Unit_0">
+                <methods>
+                    <include name="checkWindow"/>
+                    <include name="checkApp"/>
+                    <include name="checkDatabase"/>
+                </methods>
+            </class>
+            <class name="org.example.Unit_1">
+                <methods>
+                    <include name="press_play_pause"/>
                     <include name="forward_check"/>
+                    <include name="rewind_check"/>
+                </methods>
+            </class>
+            <class name="org.example.Unit_2">
+                <methods>
                     <include name="navButtons"/>
+                    <include name="navGitHub"/>
+                    <include name="expandNotice"/>
+                </methods>
+            </class>
+            <class name="org.example.Unit_3">
+                <methods>
                     <include name="addNewStation"/>
                     <include name="playRadio"/>
                     <include name="editRadioData"/>
                     <include name="removeStation"/>
+                </methods>
+            </class>
+            <class name="org.example.Unit_6">
+                <methods>
                     <include name="showsMusic"/>
                     <include name="startSong"/>
                     <include name="volumeSlider"/>
+                </methods>
+            </class>
+            <class name="org.example.Unit_7">
+                <methods>
                     <include name="defaultSort"/>
                     <include name="adjustSortingTitle"/>
                     <include name="adjustSortingArtist"/>
