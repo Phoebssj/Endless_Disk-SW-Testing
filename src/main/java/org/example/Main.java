@@ -18,7 +18,7 @@ import static org.example.Global.driver;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     // Refactored constructor so driver can be passed as param
-    public void driver_init(WebDriver driver) {
+    public static void driver_init(WebDriver driver) {
         driver.manage().window().maximize();
         driver.get("http://localhost:3000");
         driver.findElement(By.id("username")).sendKeys("IntrixTheName");
