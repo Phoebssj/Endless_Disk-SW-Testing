@@ -1,13 +1,20 @@
 package org.example;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 
-import static org.example.Global.driver;
-
-public class Unit_3 {
-
+public class Unit_3 extends Main.Unit_Test {
+    private WebDriver driver;
+    public Unit_3() {
+        this.driver = super.setup();
+    }
+    @AfterClass
+    public void Unit_3_destructor() {
+        super.teardown(driver);
+    }
     @Test(priority = 1)
     void addNewStation() throws InterruptedException { //Req 3.1
         //Getting any page assumes session login first

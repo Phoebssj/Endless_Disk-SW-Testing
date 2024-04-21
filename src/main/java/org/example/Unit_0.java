@@ -1,10 +1,19 @@
 package org.example;
 
+import org.openqa.selenium.WebDriver;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 
-import static org.example.Global.driver;
-
-public class Unit_0 {
+public class Unit_0 extends Main.Unit_Test {
+    private WebDriver driver;
+    // Initialize driver for Unit_0 using parent's constructor
+    public Unit_0() {
+        this.driver = super.setup();
+    }
+    @AfterClass
+    public void Unit_0_destructor() {
+        super.teardown(driver);
+    }
     //check if the browser Window can load (depending on where it should run)
     @Test
     void checkWindow() throws InterruptedException {

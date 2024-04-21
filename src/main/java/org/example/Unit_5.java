@@ -3,12 +3,18 @@ package org.example;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 
-import static org.example.Global.driver;
-
-public class Unit_5{
+public class Unit_5 extends Main.Unit_Test {
+    private WebDriver driver;
+    public Unit_5() {
+        this.driver = super.setup();
+    }
+    @AfterClass
+    public void Unit_5_destructor() {
+        super.teardown(driver);
+    }
     void FetchingData_MongoDb() throws InterruptedException {
         //I'm leaving two version as Mongo db has it's fighitng niche here....
         driver.get("http://localhost:3000/notices");

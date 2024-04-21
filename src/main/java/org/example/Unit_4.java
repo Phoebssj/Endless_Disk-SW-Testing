@@ -1,15 +1,19 @@
 package org.example;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 
-import static org.example.Global.driver;
-
-public class Unit_4 {
+public class Unit_4 extends Main.Unit_Test {
+    private WebDriver driver;
+    public Unit_4() {
+        this.driver = super.setup();
+    }
+    @AfterClass
+    public void Unit_4_destructor() {
+        super.teardown(driver);
+    }
     public boolean isItemInLocalStorage(String item) {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         // Returns true as long as specified item is in session storage

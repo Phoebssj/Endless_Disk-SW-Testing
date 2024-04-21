@@ -3,8 +3,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
@@ -15,11 +15,21 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.example.Global.driver;
-import static org.example.Global.driver1;
-import static org.example.Global.driver2;
+public class Unit_8 extends Main.Unit_Test{
+    private WebDriver driver;
+    private WebDriver driver1;
+    private WebDriver driver2;
 
-public class Unit_8 {
+    public Unit_8() {
+        this.driver = super.setup();
+        this.driver1 = super.setup();
+        this.driver2 = super.setup();
+    }
+    @AfterClass
+    public void Unit_8_destructor() {
+        super.teardown(driver);
+    }
+
     public void play_radio(WebDriver driver){
         String radio_play_id = "Placeholder";
         WebElement radio_play = driver.findElement(By.id(radio_play_id));
@@ -71,8 +81,6 @@ public class Unit_8 {
         // SET CONDITION TO FALSE IF PAGE TIMES OUT
         List<WebDriver> drivers = new ArrayList<>();
         // Open 3 windows and log into Endless Dial
-        Main.driver_init(driver1);
-        Main.driver_init(driver2);
         drivers.add(driver);
         drivers.add(driver1);
         drivers.add(driver2);
@@ -87,6 +95,30 @@ public class Unit_8 {
         for (WebDriver driver : drivers){
             driver.close();
         }
+    }
+
+    public boolean isConnectionStable() {
+        String hostname = "http://localhost:3000";
+        InetAddress ip = null;
+        boolean contactedHost = false;
+        boolean pingedHost = false;
+        boolean isConnectionStable = false;
+        try {
+            ip = InetAddress.getByName(hostname);
+            contactedHost = true;
+        }
+        catch (UnknownHostException e){
+            System.err.println("Hostname Error: Cannot find hostname "+hostname);
+        }
+        try{
+            // Ping should be less than 3000 ms
+            pingedHost = ip.isReachable(3000);
+        }
+        catch (IOException e) {
+            System.err.println("Network Error: cannot reach "+hostname+" before timeout.");
+        }
+        // If host can be contacted and returns ping, connection is stable
+        return (contactedHost && pingedHost);
     }
 
     @Test
@@ -119,30 +151,6 @@ public class Unit_8 {
         boolean responsive_after = !isTimeout("Placeholder", "http://localhost:3000/export");
         boolean isResponsive = (responsive_during && responsive_after);
         Assert.assertTrue(isResponsive);
-    }
-
-    public boolean isConnectionStable() {
-        String hostname = "http://localhost:3000";
-        InetAddress ip = null;
-        boolean contactedHost = false;
-        boolean pingedHost = false;
-        boolean isConnectionStable = false;
-        try {
-            ip = InetAddress.getByName(hostname);
-            contactedHost = true;
-        }
-        catch (UnknownHostException e){
-            System.err.println("Hostname Error: Cannot find hostname "+hostname);
-        }
-        try{
-            // Ping should be less than 3000 ms
-            pingedHost = ip.isReachable(3000);
-        }
-        catch (IOException e) {
-            System.err.println("Network Error: cannot reach "+hostname+" before timeout.");
-        }
-        // If host can be contacted and returns ping, connection is stable
-        return (contactedHost && pingedHost);
     }
 
     @Test

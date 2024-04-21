@@ -1,13 +1,20 @@
 package org.example;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 
-import static org.example.Global.driver;
-
-public class Unit_2 {
-
+public class Unit_2 extends Main.Unit_Test {
+    private WebDriver driver;
+    public Unit_2() {
+        this.driver = super.setup();
+    }
+    @AfterClass
+    public void Unit_2_destructor() {
+        super.teardown(driver);
+    }
     @Test(priority = 1)
     void navButtons() throws InterruptedException {
         //Testing all the buttons and scrolling if viable

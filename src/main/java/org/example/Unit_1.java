@@ -2,11 +2,19 @@ package org.example;
 
 import org.openqa.selenium.*;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 
-import static org.example.Global.driver;
-
-public class Unit_1 {
+public class Unit_1 extends Main.Unit_Test {
+    private WebDriver driver;
+    // Initialize driver for Unit_1 using parent's constructor
+    public Unit_1() {
+        this.driver = super.setup();
+    }
+    @AfterClass
+    public void Unit_1_destructor() {
+        super.teardown(driver);
+    }
     // Throw exception exists in case Thread.sleep fails
     public void press_and_wait(WebElement target_btn, int wait_time) throws InterruptedException{
         target_btn.click();

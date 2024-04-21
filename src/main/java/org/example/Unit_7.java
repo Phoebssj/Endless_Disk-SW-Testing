@@ -1,19 +1,26 @@
 package org.example;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
-
 import java.util.List;
 
-import static org.example.Global.driver;
 
-public class Unit_7 {
+public class Unit_7 extends Main.Unit_Test {
     //Notes about Unit 7:
     // - As with unit 6, this is not fully implemented AToW, so this unit will likely blow up
-
+    private WebDriver driver;
+    public Unit_7() {
+        this.driver = super.setup();
+    }
+    @AfterClass
+    public void Unit_7_destructor() {
+        super.teardown(driver);
+    }
     @Test(priority = 1)
     void defaultSort() { //Req 7.1
         driver.get("http://localhost:3000/library");

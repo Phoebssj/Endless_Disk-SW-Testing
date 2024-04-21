@@ -2,15 +2,23 @@ package org.example;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 
-import static org.example.Global.driver;
-
-public class Unit_6 {
+public class Unit_6 extends Main.Unit_Test{
     //Notes about Unit 6:
     // - As of writing, this unit has not been implemented in the features of Endless Disc
     // - Basically, assume this unit is going to blow up
+    private WebDriver driver;
+    public Unit_6() {
+        this.driver = super.setup();
+    }
+    @AfterClass
+    public void Unit_6_destructor() {
+        super.teardown(driver);
+    }
 
     @Test(priority = 1)
     void showsMusic() { //Req 6.1
