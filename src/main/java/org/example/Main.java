@@ -1,16 +1,7 @@
 package org.example;
 
-import net.bytebuddy.build.Plugin;
-import org.apache.commons.lang3.ObjectUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.Select;
-import org.testng.annotations.*;
-import org.testng.Assert;
-import org.openqa.selenium.JavascriptExecutor;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
