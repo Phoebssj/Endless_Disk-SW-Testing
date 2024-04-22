@@ -13,7 +13,8 @@ public class Unit_6 extends Main.Unit_Test{
     // - Basically, assume this unit is going to blow up
     private WebDriver driver;
     public Unit_6() {
-        this.driver = super.setup();
+        driver = super.setup();
+        super.sign_in(driver);
     }
     @AfterClass
     public void Unit_6_destructor() {

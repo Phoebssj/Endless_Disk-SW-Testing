@@ -15,7 +15,8 @@ public class Unit_7 extends Main.Unit_Test {
     // - As with unit 6, this is not fully implemented AToW, so this unit will likely blow up
     private WebDriver driver;
     public Unit_7() {
-        this.driver = super.setup();
+        driver = super.setup();
+        super.sign_in(driver);
     }
     @AfterClass
     public void Unit_7_destructor() {

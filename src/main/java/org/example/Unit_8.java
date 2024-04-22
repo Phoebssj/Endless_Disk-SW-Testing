@@ -24,6 +24,9 @@ public class Unit_8 extends Main.Unit_Test{
         this.driver = super.setup();
         this.driver1 = super.setup();
         this.driver2 = super.setup();
+        super.sign_in(driver);
+        super.sign_in(driver1);
+        super.sign_in(driver2);
     }
     @AfterClass
     public void Unit_8_destructor() {

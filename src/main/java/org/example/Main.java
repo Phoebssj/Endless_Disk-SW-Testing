@@ -20,7 +20,7 @@ public class Main {
             driver.findElement(By.id("login-button")).click();
         }
         protected void teardown(WebDriver driver) {
-            driver.close();
+            driver.quit();
         }
     }
 }

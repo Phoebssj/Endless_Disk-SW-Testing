@@ -8,7 +8,8 @@ public class Unit_0 extends Main.Unit_Test {
     private WebDriver driver;
     // Initialize driver for Unit_0 using parent's constructor
     public Unit_0() {
-        this.driver = super.setup();
+        driver = super.setup();
+        super.sign_in(driver);
     }
     @AfterClass
     public void Unit_0_destructor() {

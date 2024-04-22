@@ -9,7 +9,8 @@ import org.testng.annotations.Test;
 public class Unit_3 extends Main.Unit_Test {
     private WebDriver driver;
     public Unit_3() {
-        this.driver = super.setup();
+        driver = super.setup();
+        super.sign_in(driver);
     }
     @AfterClass
     public void Unit_3_destructor() {
